@@ -1,0 +1,3 @@
+rootProject.name = "BeeCoreExamples"
+include ':app'
+include ':BeeCore'
