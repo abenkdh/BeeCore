@@ -11,6 +11,9 @@ lateinit var ADMOB_BANNER_ID: String
 lateinit var ADMOB_INTERSTITIAL_ID: String
 lateinit var ADMOB_REWARD_ADS: String
 lateinit var ADMOB_OPEN_ADS_ID: String
+
+lateinit var STARTAPP_ID: String
+
 var INTERSTITIAL_CLICK = 0
 
 

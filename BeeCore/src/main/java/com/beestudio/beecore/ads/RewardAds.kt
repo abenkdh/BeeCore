@@ -9,10 +9,12 @@ import com.facebook.ads.RewardedVideoAdListener
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
-
+import com.startapp.android.publish.adsCommon.StartAppAd
+import com.startapp.android.publish.adsCommon.StartAppSDK
 
 private var rewardedAd: RewardedAd? = null
 fun Activity.loadRewardAds(callback: () -> Unit) {
+    StartAppAd.disableSplash()
     if(BeePurchase.isPremium()){
         callback.invoke()
     } else {
