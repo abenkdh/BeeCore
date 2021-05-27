@@ -1,9 +1,11 @@
-package com.beestudio.beecore
+package com.beestudio.beecore.inapp
 
 import android.app.Activity
 import android.content.Intent
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
+import com.beestudio.beecore.BeePref
+import com.beestudio.beecore.log
 
 class BeePurchase(
     private val activity: Activity,
@@ -34,7 +36,7 @@ class BeePurchase(
         if(billingProcessor.isInitialized) {
             billingProcessor.purchase(activity, productId)
         } else {
-            beeLogger("biling not initialized")
+            "biling not initialized".log()
         }
     }
     
@@ -57,12 +59,11 @@ class BeePurchase(
             override fun onBillingInitialized() {
                 billingProcessor.getPurchaseTransactionDetails(productId).let {
                     try {
-                        beeLogger(it?.purchaseInfo?.purchaseData?.productId !!)
+                        it?.purchaseInfo?.purchaseData?.productId !!.log()
                         BeePref.write("billingProcessor", true)
                     } catch(e: Exception) {
                         onBillingInitialized.invoke()
                         BeePref.write("billingProcessor", false)
-                        beeLogger("asdasdasd")
                     }
                 }
             }

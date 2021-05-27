@@ -9,9 +9,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
-import com.beestudio.beecore.BeePurchase
+import com.beestudio.beecore.inapp.BeePurchase
 import com.beestudio.beecore.R
-import com.beestudio.beecore.beeLogger
+import com.beestudio.beecore.log
 import com.facebook.ads.Ad
 import com.facebook.ads.NativeAd
 import com.facebook.ads.NativeAdListener
@@ -32,7 +32,7 @@ private var isNativeLoaded: Boolean = false
 fun Context.setupNativeView(view: ViewGroup) {
     if(BeePurchase.isPremium()) {
         if (isNativeLoaded) {
-            if (AdsHelpers.ADS_PROVIDER?.lowercase() == "facebook") {
+            if (ADS_PROVIDER?.lowercase() == "facebook") {
                 createFacebookNativeView(view)
             } else {
                 createAdmobNativeView(view)
@@ -45,8 +45,8 @@ fun Context.loadNativeAds(callback: () -> Unit) {
     if(BeePurchase.isPremium()){
         callback.invoke()
     } else {
-        if (AdsHelpers.ADS_PROVIDER?.lowercase() == "facebook") {
-            val nativeAd = NativeAd(this, AdsHelpers.FACEBOOK_NATIVE_ID)
+        if (ADS_PROVIDER?.lowercase() == "facebook") {
+            val nativeAd = NativeAd(this, FACEBOOK_NATIVE_ID)
             nativeAd.loadAd(
                 nativeAd.buildLoadAdConfig()
                     .withAdListener(object : NativeAdListener {
@@ -74,7 +74,7 @@ fun Context.loadNativeAds(callback: () -> Unit) {
             )
         } else {
             MobileAds.initialize(this)
-            val nativeLoader = AdLoader.Builder(this, AdsHelpers.ADMOB_NATIVE_ID)
+            val nativeLoader = AdLoader.Builder(this, ADMOB_NATIVE_ID)
                 .forNativeAd { nativeAd ->
                     isNativeLoaded = true
                     nativeAds = nativeAd
@@ -83,7 +83,7 @@ fun Context.loadNativeAds(callback: () -> Unit) {
                 .withAdListener(object : AdListener() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {
                         callback.invoke()
-                        beeLogger(adError.message)
+                        adError.message.log()
                     }
                 }).build()
             nativeLoader.loadAd(AdRequest.Builder().build())

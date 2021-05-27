@@ -8,10 +8,21 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import android.widget.Toast
 import java.util.*
+
+fun Any.log(tag: String? = "ABENK"){
+    Log.e("$tag : ", "" + this)
+}
+
+fun Context.toast(message: String){
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+}
 
 fun Context.startBrowser(string: String): Unit =
     this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(string)))
+
 
 fun Context.startShareApp(string: String) {
     val sendIntent = Intent()
@@ -21,6 +32,8 @@ fun Context.startShareApp(string: String) {
     this.startActivity(sendIntent)
 }
 
+fun Context.startRate(): Unit =
+    this.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + this.packageName)))
 
 inline fun <reified T : Activity> Context.startAct(): Unit =
     this.startActivity(newIntent<T>())

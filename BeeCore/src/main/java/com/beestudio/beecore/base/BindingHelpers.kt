@@ -77,24 +77,15 @@ inline fun <reified V : ViewBinding> ViewGroup.toBinding(): V {
     ).invoke(null, LayoutInflater.from(context), this, false) as V
 }
 
-internal fun <VM : AndroidViewModel, V : ViewBinding> BaseActivity<VM, V>.getBinding(): V {
+internal fun <V : ViewBinding> BaseActivity<V>.getBinding(): V {
     return findClass().getBinding(layoutInflater)
 }
 
-internal fun <V : ViewBinding> BaseActivityBinding<V>.getBinding(): V {
-    return findClass().getBinding(layoutInflater)
-}
 
-internal fun <VM : AndroidViewModel,V : ViewBinding> BaseFragment<VM, V>.getBinding(
+internal fun <V : ViewBinding> BaseFragment<V>.getBinding(
     inflater: LayoutInflater,
     container: ViewGroup?
 ): V {
     return findClass().getBinding(inflater, container)
 }
 
-internal fun <V : ViewBinding> BaseFragmentBinding<V>.getBinding(
-    inflater: LayoutInflater,
-    container: ViewGroup?
-): V {
-    return findClass().getBinding(inflater, container)
-}

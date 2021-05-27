@@ -9,7 +9,7 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowMetrics
-import com.beestudio.beecore.BeePurchase
+import com.beestudio.beecore.inapp.BeePurchase
 import com.facebook.ads.AdSize
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -21,14 +21,14 @@ fun Context.loadBannerAds(block: (View) -> Unit) {
     if(BeePurchase.isPremium()){
         block.invoke(View(this))
     } else {
-        if (AdsHelpers.ADS_PROVIDER?.lowercase() == "facebook") {
-            adViewFacebook = com.facebook.ads.AdView(this, AdsHelpers.FACEBOOK_BANNER_ID, AdSize.BANNER_HEIGHT_50)
+        if (ADS_PROVIDER?.lowercase() == "facebook") {
+            adViewFacebook = com.facebook.ads.AdView(this, FACEBOOK_BANNER_ID, AdSize.BANNER_HEIGHT_50)
             block.invoke(adViewFacebook)
             adViewFacebook.loadAd()
         } else {
             adViewAdmob = AdView(this)
             adViewAdmob.adSize = adSize
-            adViewAdmob.adUnitId = AdsHelpers.ADMOB_BANNER_ID
+            adViewAdmob.adUnitId = ADMOB_BANNER_ID
             block.invoke(adViewAdmob)
             adViewAdmob.loadAd(AdRequest.Builder().build())
         }
@@ -36,7 +36,7 @@ fun Context.loadBannerAds(block: (View) -> Unit) {
 }
 
 fun destroyBannerAds() {
-    if (AdsHelpers.ADS_PROVIDER?.lowercase() == "facebook") {
+    if (ADS_PROVIDER?.lowercase() == "facebook") {
         adViewFacebook.destroy()
     } else {
         adViewAdmob.destroy()

@@ -6,20 +6,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity<VM : AndroidViewModel, V : ViewBinding>(private val viewModelClass: Class<VM>) : AppCompatActivity() {
+abstract class BaseActivity<V : ViewBinding> : AppCompatActivity() {
     lateinit var binding: V
-
-    val viewModel by lazy {
-        ViewModelProvider(this).get(viewModelClass)
-    }
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getBinding()
         setContentView(binding.root)
         setupBinding(binding)
     }
-
+    
     open fun setupBinding(binding: V){}
-
+    
 }

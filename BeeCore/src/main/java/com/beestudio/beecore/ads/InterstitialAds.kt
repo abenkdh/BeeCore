@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import androidx.annotation.NonNull
-import com.beestudio.beecore.BeePurchase
+import com.beestudio.beecore.inapp.BeePurchase
 import com.facebook.ads.Ad
 import com.facebook.ads.InterstitialAdListener
 import com.google.android.gms.ads.AdRequest
@@ -23,7 +23,7 @@ fun Context.loadInterstitial(callback: () -> Unit) {
         val adRequest: AdRequest = AdRequest.Builder().build()
         com.google.android.gms.ads.interstitial.InterstitialAd.load(
             this,
-            AdsHelpers.ADMOB_INTERSTITIAL_ID,
+            ADMOB_INTERSTITIAL_ID,
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(@NonNull interstitialAd: com.google.android.gms.ads.interstitial.InterstitialAd) {
@@ -47,7 +47,7 @@ fun Context.showInterstitialWithCount(block: () -> Unit) {
         block.invoke()
     } else {
         INTERSTITIAL_COUNT++
-        if (AdsHelpers.INTERSTITIAL_CLICK == INTERSTITIAL_COUNT) {
+        if (INTERSTITIAL_CLICK == INTERSTITIAL_COUNT) {
             INTERSTITIAL_COUNT = 0
             showInterstitialAds {
                 block.invoke()
@@ -63,10 +63,10 @@ fun Context.showInterstitialAds(block: () -> Unit) {
     if(BeePurchase.isPremium()){
         block.invoke()
     } else {
-        if (AdsHelpers.ADS_PROVIDER?.lowercase() == "facebook") {
+        if (ADS_PROVIDER?.lowercase() == "facebook") {
             interstitialAdFacebook = com.facebook.ads.InterstitialAd(
                 this,
-                AdsHelpers.FACEBOOK_INTERSTITIAL_ID
+                FACEBOOK_INTERSTITIAL_ID
             )
             val interstitialAdListener = object : InterstitialAdListener {
                 override fun onInterstitialDisplayed(p0: Ad?) {

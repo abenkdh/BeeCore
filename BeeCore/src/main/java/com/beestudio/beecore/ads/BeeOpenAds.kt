@@ -7,7 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.beestudio.beecore.BeePurchase
+import com.beestudio.beecore.inapp.BeePurchase
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -69,7 +69,7 @@ class BeeOpenAds(private var application: Application, private var orientation: 
             return
         }
         val request = getAdRequest()
-        AppOpenAd.load(application, AdsHelpers.ADMOB_OPEN_ADS_ID, request, orientation!!, object : AppOpenAdLoadCallback() {
+        AppOpenAd.load(application, ADMOB_OPEN_ADS_ID, request, orientation!!, object : AppOpenAdLoadCallback() {
             override fun onAdLoaded(ad: AppOpenAd) {
                 super.onAdLoaded(ad)
                 appOpenAd = ad

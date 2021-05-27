@@ -2,8 +2,7 @@ package com.beestudio.beecore.ads
 
 
 import android.app.Activity
-import com.beestudio.beecore.BeePurchase
-import com.beestudio.beecore.ads.AdsHelpers.Companion.ADMOB_REWARD_ADS
+import com.beestudio.beecore.inapp.BeePurchase
 import com.facebook.ads.Ad
 import com.facebook.ads.RewardedVideoAd
 import com.facebook.ads.RewardedVideoAdListener
@@ -36,7 +35,7 @@ fun Activity.showRewardAds(callback: () -> Unit) {
     if(BeePurchase.isPremium()){
         callback.invoke()
     } else {
-        if (AdsHelpers.ADS_PROVIDER!!.lowercase() != "facebook") {
+        if (ADS_PROVIDER!!.lowercase() != "facebook") {
             rewardedAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {}
 
@@ -57,7 +56,7 @@ fun Activity.showRewardAds(callback: () -> Unit) {
                 }
             }
         } else {
-            val rewardedAdFacebook = RewardedVideoAd(this, AdsHelpers.FACEBOOK_REWARD_ID)
+            val rewardedAdFacebook = RewardedVideoAd(this, FACEBOOK_REWARD_ID)
             val rewardedVideoAdListener: RewardedVideoAdListener =
                 object : RewardedVideoAdListener {
                     override fun onError(p0: Ad?, p1: com.facebook.ads.AdError?) {
