@@ -49,21 +49,25 @@ lateinit var interstitialAdAdmob: InterstitialAd
 lateinit var interstitialAdFacebook: com.facebook.ads.InterstitialAd
 
 @SuppressLint("MissingPermission")
-fun Context.createInterstitialAds(){
+fun Context.loadInterstitial(callback: () -> Unit){
     interstitialAdAdmob = InterstitialAd(this)
     interstitialAdAdmob.adUnitId = ADMOB_INTERSTITIAL_ID
     interstitialAdAdmob.loadAd(AdRequest.Builder().build())
     interstitialAdAdmob.adListener = object : AdListener() {
         override fun onAdFailedToLoad(p0: LoadAdError?) {
             super.onAdFailedToLoad(p0)
-            interstitialAdAdmob.loadAd(AdRequest.Builder().build())
+            callback.invoke()
+        }
+        
+        override fun onAdLoaded() {
+            super.onAdLoaded()
+            callback.invoke()
         }
     }
 }
 
 var INTERSTITIAL_COUNT = 0
-fun Context.showInterstitialWithCount(count : Int, block: () -> Unit){
-    INTERSTITIAL_CLICK = count
+fun Context.showInterstitialWithCount(block: () -> Unit){
     INTERSTITIAL_COUNT++
     if(INTERSTITIAL_CLICK == INTERSTITIAL_COUNT){
         INTERSTITIAL_COUNT = 0
