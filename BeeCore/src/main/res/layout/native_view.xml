@@ -1,4 +1,4 @@
-<com.google.android.gms.ads.nativead.NativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.facebook.ads.NativeAdLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/transparent"
     android:id="@+id/native_ad_view"
@@ -153,4 +153,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-</com.google.android.gms.ads.nativead.NativeAdView>
+</com.facebook.ads.NativeAdLayout>
