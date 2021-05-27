@@ -43,19 +43,30 @@ class BeeOpenAds(private var application: Application, private var orientation: 
             return
         }
         if (!isShowingAd && isAdAvailable()) {
-            appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+//            appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+//                override fun onAdDismissedFullScreenContent() {
+//                    appOpenAd = null
+//                    isShowingAd = false
+//                    fetchAd()
+//                }
+//                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+//                }
+//                override fun onAdShowedFullScreenContent() {
+//                    isShowingAd = true
+//                }
+//            }
+//            appOpenAd!!.show(currentActivity!!)
+            appOpenAd!!.show(currentActivity, object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     appOpenAd = null
                     isShowingAd = false
                     fetchAd()
                 }
-                override fun onAdFailedToShowFullScreenContent(adError: AdError) {
-                }
+                override fun onAdFailedToShowFullScreenContent(adError: AdError) {}
                 override fun onAdShowedFullScreenContent() {
                     isShowingAd = true
                 }
-            }
-            appOpenAd!!.show(currentActivity!!)
+            })
         } else {
             fetchAd()
         }
@@ -70,16 +81,23 @@ class BeeOpenAds(private var application: Application, private var orientation: 
         }
         val request = getAdRequest()
         AppOpenAd.load(application, ADMOB_OPEN_ADS_ID, request, orientation!!, object : AppOpenAdLoadCallback() {
-            override fun onAdLoaded(ad: AppOpenAd) {
-                super.onAdLoaded(ad)
+            override fun onAppOpenAdLoaded(ad: AppOpenAd?) {
+                super.onAppOpenAdLoaded(ad)
                 appOpenAd = ad
                 loadTime = Date().time
             }
-
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                super.onAdFailedToLoad(p0)
-            }
         })
+//        AppOpenAd.load(application, ADMOB_OPEN_ADS_ID, request, orientation!!, object : AppOpenAdLoadCallback() {
+//            override fun onAdLoaded(ad: AppOpenAd) {
+//                super.onAdLoaded(ad)
+//                appOpenAd = ad
+//                loadTime = Date().time
+//            }
+//
+//            override fun onAdFailedToLoad(p0: LoadAdError) {
+//                super.onAdFailedToLoad(p0)
+//            }
+//        })
     }
 
     private fun getAdRequest(): AdRequest {
